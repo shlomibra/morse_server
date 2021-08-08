@@ -18,7 +18,7 @@ pipeline {
 
             steps { 
 
-                git 'https://github.com/shlomibra/morse.git' 
+                git([url: 'https://github.com/shlomibra/morse_server.git', branch: 'main'])
             }
 
         } 
