@@ -67,7 +67,21 @@ pipeline {
             }
 
         } 
+        
+        stage('Run and test server') { 
 
+            steps { 
+                
+              script {
+                
+                    dockerImage.withRun('-d -p 11113:11113')
+                    
+                    }
+
+            }
+
+        } 
+                     
     }
 
 }
