@@ -74,7 +74,7 @@ pipeline {
                 
               script {
                 
-                    dockerImage.withRun('-d -p 11113:11113')
+                    docker.image('braunsteinshlomi/morse-service').withRun ('-d -p 11113:11113')
                     
                     }
 
