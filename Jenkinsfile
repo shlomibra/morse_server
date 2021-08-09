@@ -2,7 +2,7 @@ pipeline {
 
     environment { 
 
-        registry = "https://hub.docker.com/repository/docker/braunsteinshlomi/morse-service" 
+        registry = 'https://registry.hub.docker.com' 
 
         registryCredential = 'docker-hub-credentials' 
 
@@ -43,7 +43,7 @@ pipeline {
 
                 script { 
 
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                    docker.withRegistry(registry, registryCredential) {
                     dockerImage.push("${env.BUILD_NUMBER}")
                     dockerImage.push("latest")
 
@@ -55,11 +55,11 @@ pipeline {
 
         } 
 
-        stage('Cleaning up') { 
+        stage('Pull image') { 
 
             steps { 
 
-                sh "docker rmi $registry:$BUILD_NUMBER" 
+                dockerImage.pull("latest") 
 
             }
 
