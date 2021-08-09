@@ -58,8 +58,12 @@ pipeline {
         stage('Pull image') { 
 
             steps { 
-
-                dockerImage.pull("latest") 
+                
+              script {
+                
+                    dockerImage.pull("latest") 
+                    
+                    }
 
             }
 
