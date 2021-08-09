@@ -75,6 +75,7 @@ pipeline {
                     sh 'docker run -d -p 11113:11113 braunsteinshlomi/morse-service'
                     sh 'telnet localhost 11113'
                     sh 'telnet localhost 11113'
+                    sh 'telnet localhost 11113'
             }
 
         } 
