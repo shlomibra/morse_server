@@ -61,7 +61,7 @@ pipeline {
                 
               script {
                 
-                    dockerImage.pull("latest") 
+                    dockerImage.pull 
                     
                     }
 
