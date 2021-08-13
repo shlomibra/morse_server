@@ -83,6 +83,7 @@ pipeline {
                     }
                         sh 'curl localhost:$hostPort'
                         sh 'curl localhost:$hostPort'
+                        sh 'curl localhost:$hostPort'
                         sh 'docker kill $(docker ps -q)'
                     }
             }
