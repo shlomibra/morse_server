@@ -72,7 +72,7 @@ pipeline {
 
             steps { 
                 
-                    sh 'docker run -d -p 11113:11113 braunsteinshlomi/morse-service'
+                    sh "docker run -d -p 11113:11113 braunsteinshlomi/morse-service:$BUILD_NUMBER"
                     sh 'curl localhost:11113'
 
             }
@@ -82,7 +82,7 @@ pipeline {
        stage('Remove Unused docker image') {
            
           steps{
-                    sh "docker rmi $registry:$BUILD_NUMBER"
+                    sh "docker rmi $dockerImage"
         }
            
        }
