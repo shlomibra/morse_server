@@ -2,7 +2,7 @@ pipeline {
 
     environment { 
 
-        registry = 'https://registry.hub.docker.com' 
+        registry = 'braunsteinshlomi/morse-service' 
 
         registryCredential = 'docker-hub-credentials' 
 
@@ -29,7 +29,7 @@ pipeline {
 
                 script { 
 
-                    dockerImage = docker.build("braunsteinshlomi/morse-service" + ":$BUILD_NUMBER")
+                    dockerImage = docker.build(registry + ":$BUILD_NUMBER")
 
                 }
 
@@ -43,7 +43,7 @@ pipeline {
 
                 script { 
 
-                    docker.withRegistry(registry, registryCredential) {
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
                     dockerImage.push()
 
                     }
@@ -82,7 +82,7 @@ pipeline {
        stage('Remove Unused docker image') {
            
           steps{
-                    sh "docker rmi $dockerImage"
+                    sh "docker rmi $registry:$BUILD_NUMBER"
         }
            
        }
