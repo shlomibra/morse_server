@@ -72,8 +72,9 @@ pipeline {
 
             steps { 
                 
-                    sh "docker run -d -p 11113:11113 braunsteinshlomi/morse-service:$BUILD_NUMBER"
+                    sh "docker run -d -p 11113:11113 $registry:$BUILD_NUMBER"
                     sh 'curl localhost:11113'
+                    sh 'docker kill $(docker ps -q)'
 
             }
 
