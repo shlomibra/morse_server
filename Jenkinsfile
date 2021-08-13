@@ -6,7 +6,8 @@ pipeline {
 
         registryCredential = 'docker-hub-credentials' 
 
-        dockerImage = '' 
+        dockerImage = ''
+        hostPort=''
 
     }
 
@@ -73,12 +74,14 @@ pipeline {
             steps { 
                  script { 
                      if (env.BRANCH_NAME == 'main') {
+                         hostPort ='4000'
                         sh "docker run -d -p 11113:4000 $registry:$BUILD_NUMBER"
                     }
                      if (env.BRANCH_NAME == 'develop') {
+                         hostPort ='5000'
                         sh "docker run -d -p 11113:5000 $registry:$BUILD_NUMBER"
                     }
-                        sh 'curl localhost:11113'
+                        sh 'curl localhost:$hostPort'
                         sh 'docker kill $(docker ps -q)'
                  }
             }
