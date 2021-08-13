@@ -71,11 +71,16 @@ pipeline {
         stage('Run and test server') { 
 
             steps { 
-                
-                    sh "docker run -d -p 11113:11113 $registry:$BUILD_NUMBER"
-                    sh 'curl localhost:11113'
-                    sh 'docker kill $(docker ps -q)'
-
+                 script { 
+                     if (env.BRANCH_NAME == 'main') {
+                        sh "docker run -d -p 11113:4000 $registry:$BUILD_NUMBER"
+                    }
+                     if (env.BRANCH_NAME == 'develop') {
+                        sh "docker run -d -p 11113:5000 $registry:$BUILD_NUMBER"
+                    }
+                        sh 'curl localhost:11113'
+                        sh 'docker kill $(docker ps -q)'
+                 }
             }
 
         } 
