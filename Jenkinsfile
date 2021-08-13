@@ -18,7 +18,7 @@ pipeline {
         stage('Cloning our Git') { 
 
             steps { 
-
+                sh 'echo $BRANCH_NAME'
                 git([url: 'https://github.com/shlomibra/morse_server.git', branch: 'main'])
             }
 
@@ -83,7 +83,7 @@ pipeline {
                     }
                         sh 'curl localhost:$hostPort'
                         sh 'docker kill $(docker ps -q)'
-                 }
+                    }
             }
 
         } 
