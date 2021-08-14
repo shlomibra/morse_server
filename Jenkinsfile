@@ -13,7 +13,9 @@ pipeline {
 
     agent any 
 
-    stage('Test') {
+    stages { 
+        
+        stage('Test') {
         steps {
             script {
                 branchName = sh(label: 'getBranchName', returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
@@ -22,7 +24,6 @@ pipeline {
         }
       } 
 
-    stages { 
 
         stage('Cloning our Git') { 
 
