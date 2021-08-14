@@ -82,7 +82,6 @@ pipeline {
                         sh "docker run -d -p 11113:5000 $registry:$BUILD_NUMBER"
                     }
                         sh 'curl localhost:$hostPort'
-                        sh 'curl localhost:$hostPort'
                         sh 'docker kill $(docker ps -q)'
                     }
             }
