@@ -1,7 +1,6 @@
 pipeline { 
 
     environment { 
-
         registry = 'braunsteinshlomi/morse-service' 
         registryCredential = 'docker-hub-credentials'         
         dockerImage = ''
