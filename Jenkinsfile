@@ -17,7 +17,7 @@ pipeline {
         stage('Cloning our Git') { 
 
             steps { 
-
+                sh 'echo $GIT_BRANCH'
                 git([url: 'https://github.com/shlomibra/morse_server.git', branch: 'main'])
             }
 
