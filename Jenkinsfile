@@ -3,22 +3,21 @@ pipeline {
     environment { 
 
         registry = 'braunsteinshlomi/morse-service' 
-
-        registryCredential = 'docker-hub-credentials' 
-
-        dockerImage = '' 
+        registryCredential = 'docker-hub-credentials'         
+        dockerImage = ''
+        branch_Name = "${GIT_BRANCH.replaceFirst(/^.*\//, '')}"
 
     }
 
     agent any 
 
     stages { 
-
+        
         stage('Cloning our Git') { 
 
             steps { 
-                sh 'echo $GIT_BRANCH'
-                git([url: 'https://github.com/shlomibra/morse_server.git', branch: 'main'])
+                sh 'echo branch name is: $branch_Name'
+                git([url: 'https://github.com/shlomibra/morse_server.git', branch: branch_Name])
             }
 
         } 
@@ -71,11 +70,18 @@ pipeline {
         stage('Run and test server') { 
 
             steps { 
-                
-                    sh "docker run -d -p 11113:11113 $registry:$BUILD_NUMBER"
-                    sh 'curl localhost:11113'
-                    sh 'docker kill $(docker ps -q)'
-
+                 script { 
+                     if (branch_Name == 'main') {
+                        sh "docker run -d -p 11113:4000 $registry:$BUILD_NUMBER"
+                        sh 'curl localhost:4000'
+                    }
+                     if (branch_Name == 'develop') {
+                        sh "docker run -d -p 11113:5000 $registry:$BUILD_NUMBER"
+                        sh 'curl localhost:5000'
+                    }
+                        
+                        sh 'docker kill $(docker ps -a -q  --filter ancestor=$registry:$BUILD_NUMBER)'
+                    }
             }
 
         } 
