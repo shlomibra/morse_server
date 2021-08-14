@@ -78,7 +78,7 @@ pipeline {
                         sh 'curl localhost:5000'
                     }
                         
-                        sh 'docker kill $(docker ps -a -q  --filter ancestor=$registry:$BUILD_NUMBER)'
+                        sh 'docker kill $(docker ps -a -q  --filter ancestor=$registry:$BUILD_NUMBER) || true'
                     }
             }
 
