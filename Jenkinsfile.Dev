@@ -6,7 +6,6 @@ pipeline {
         registryCredential = 'docker-hub-credentials'         
         dockerImage = ''
         branch_Name = "${GIT_BRANCH.replaceFirst(/^.*\//, '')}"
-
     }
 
     agent any 
