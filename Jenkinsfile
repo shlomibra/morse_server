@@ -5,7 +5,6 @@ pipeline {
         registry = 'braunsteinshlomi/morse-service' 
         registryCredential = 'docker-hub-credentials'         
         dockerImage = ''
-        hostPort=''
         branch_Name = "${GIT_BRANCH.replaceFirst(/^.*\//, '')}"
 
     }
@@ -73,15 +72,15 @@ pipeline {
             steps { 
                  script { 
                      if (branch_Name == 'main') {
-                         hostPort ='4000'
                         sh "docker run -d -p 11113:4000 $registry:$BUILD_NUMBER"
+                        sh 'curl localhost:4000'
                     }
                      if (branch_Name == 'develop') {
-                         hostPort ='5000'
                         sh "docker run -d -p 11113:5000 $registry:$BUILD_NUMBER"
+                        sh 'curl localhost:5000'
                     }
-                        sh 'curl localhost:$hostPort'
-                        sh 'docker kill $(docker ps -q)'
+                        
+                        sh 'docker kill $(docker ps -a -q  --filter ancestor=$registry)'
                     }
             }
 
