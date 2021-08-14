@@ -15,21 +15,11 @@ pipeline {
 
     stages { 
         
-        stage('Test') {
-        steps {
-            script {
-                branchName = sh(label: 'getBranchName', returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-                println branchName
-            }   
-        }
-      } 
-
-
         stage('Cloning our Git') { 
 
             steps { 
-                sh 'echo $GIT_BRANCH'
-                git([url: 'https://github.com/shlomibra/morse_server.git', branch: 'main'])
+                sh 'echo branch name is: $GIT_BRANCH'
+                git([url: 'https://github.com/shlomibra/morse_server.git', branch: env.GIT_BRANCH])
             }
 
         } 
@@ -83,11 +73,11 @@ pipeline {
 
             steps { 
                  script { 
-                     if (env.GIT_BRANCH == 'main') {
+                     if (env.GIT_BRANCH == 'origin/main') {
                          hostPort ='4000'
                         sh "docker run -d -p 11113:4000 $registry:$BUILD_NUMBER"
                     }
-                     if (env.GIT_BRANCH == 'develop') {
+                     if (env.GIT_BRANCH == 'origin/develop') {
                          hostPort ='5000'
                         sh "docker run -d -p 11113:5000 $registry:$BUILD_NUMBER"
                     }
