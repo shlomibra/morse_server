@@ -72,15 +72,15 @@ pipeline {
             steps { 
                  script { 
                      if (branch_Name == 'main') {
-                        sh "docker run -d -p 11113:4000 $registry:$BUILD_NUMBER"
+                        sh "docker run -d -p 4000:11113 $registry:$BUILD_NUMBER"
                         sh 'curl localhost:4000'
                     }
                      if (branch_Name == 'develop') {
-                        sh "docker run -d -p 11113:5000 $registry:$BUILD_NUMBER"
+                        sh "docker run -d -p 5000:11113 $registry:$BUILD_NUMBER"
                         sh 'curl localhost:5000'
                     }
                         
-                        sh 'docker kill $(docker ps -a -q  --filter ancestor=$registry:$BUILD_NUMBER)'
+                        sh 'docker kill $(docker ps -a -q  --filter ancestor=$registry:$BUILD_NUMBER) || true'
                     }
             }
 
