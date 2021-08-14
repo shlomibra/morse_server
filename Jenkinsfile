@@ -18,7 +18,7 @@ pipeline {
         stage('Cloning our Git') { 
 
             steps { 
-                sh 'echo $BRANCH_NAME'
+                sh 'echo $GIT_BRANCH'
                 git([url: 'https://github.com/shlomibra/morse_server.git', branch: 'main'])
             }
 
@@ -73,11 +73,11 @@ pipeline {
 
             steps { 
                  script { 
-                     if (env.BRANCH_NAME == 'main') {
+                     if (env.GIT_BRANCH == 'main') {
                          hostPort ='4000'
                         sh "docker run -d -p 11113:4000 $registry:$BUILD_NUMBER"
                     }
-                     if (env.BRANCH_NAME == 'develop') {
+                     if (env.GIT_BRANCH == 'develop') {
                          hostPort ='5000'
                         sh "docker run -d -p 11113:5000 $registry:$BUILD_NUMBER"
                     }
